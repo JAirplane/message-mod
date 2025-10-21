@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "message-mod-id",
+	"version": "${version}",
+	"name": "Message Mod",
+	"description": "Test mode",
+	"authors": [
+		"Shevchenko Eugene"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/message-mod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.jefferson.MessageMod"
+		],
+		"client": [
+			"com.jefferson.MessageModClient"
+		]
+	},
+	"mixins": [
+		"message-mod.mixins.json",
+		{
+			"config": "message-mod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.3",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*",
+        "fabric-key-binding-api-v1": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

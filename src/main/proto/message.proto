@@ -1,0 +1,8 @@
+syntax = "proto3";
+package com.jefferson.protobuf;
+
+option java_outer_classname = "MessageOuterClass";
+
+message Message {
+  string text = 1;
+}
