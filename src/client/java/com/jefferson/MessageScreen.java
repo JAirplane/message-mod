@@ -1,9 +1,7 @@
 package com.jefferson;
 
+import com.jefferson.networking.MessagePayload;
 import com.jefferson.protobuf.MessageOuterClass;
-import com.mojang.blaze3d.platform.InputConstants;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -11,13 +9,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class MessageScreen extends Screen {
@@ -25,7 +18,7 @@ public class MessageScreen extends Screen {
     private EditBox textField;
     private Button sendButton;
     public static final ResourceLocation MESSAGE_CHANNEL =
-            ResourceLocation.fromNamespaceAndPath("template_mod", "message");
+            ResourceLocation.fromNamespaceAndPath("message_mod", "message");
 
     public MessageScreen() {
         super(Component.literal("Send Message"));
@@ -61,23 +54,6 @@ public class MessageScreen extends Screen {
 
             byte[] bytes = message.toByteArray();
 
-            record MessagePayload(byte[] data) implements CustomPacketPayload {
-                public static final CustomPacketPayload.Type<MessagePayload> TYPE =
-                        new CustomPacketPayload.Type<>(
-                                ResourceLocation.fromNamespaceAndPath("template_mod", "message"));
-
-                public static final StreamCodec<ByteBuf, MessagePayload> STREAM_CODEC = StreamCodec.composite(
-                        ByteBufCodecs.BYTE_ARRAY,
-                        MessagePayload::data,
-                        MessagePayload::new
-                );
-
-                @Override
-                public @NotNull Type<? extends CustomPacketPayload> type() {
-                    return TYPE;
-                }
-            }
-
             MessagePayload payload = new MessagePayload(bytes);
             ClientPlayNetworking.send(payload);
 
@@ -87,11 +63,9 @@ public class MessageScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {  // Исправленная сигнатура
-        this.renderBackground(guiGraphics, mouseX, mouseY, delta);  // Исправленный метод
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         super.render(guiGraphics, mouseX, mouseY, delta);
 
-        // Рендерим текст поля ввода
         guiGraphics.drawString(this.font, "Message:", this.width / 2 - 100, this.height / 2 - 25, 0xFFFFFF);
     }
 

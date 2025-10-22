@@ -23,18 +23,12 @@
 		]
 	},
 	"mixins": [
-		"message-mod.mixins.json",
-		{
-			"config": "message-mod.client.mixins.json",
-			"environment": "client"
-		}
 	],
 	"depends": {
 		"fabricloader": ">=0.17.3",
 		"minecraft": "~1.21.8",
 		"java": ">=21",
-		"fabric-api": "*",
-        "fabric-key-binding-api-v1": "*"
+		"fabric-api": "*"
 	},
 	"suggests": {
 		"another-mod": "*"
