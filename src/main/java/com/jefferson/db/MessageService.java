@@ -2,6 +2,7 @@ package com.jefferson.db;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class MessageService {
 
@@ -22,7 +23,7 @@ public class MessageService {
         repository.saveMessage(playerUuid, text.trim());
     }
 
-    public Optional<MessageEntity> getMessageById(Long id) {
+    public CompletableFuture<Optional<MessageEntity>> getMessageById(Long id) {
         return repository.findById(id);
     }
 }

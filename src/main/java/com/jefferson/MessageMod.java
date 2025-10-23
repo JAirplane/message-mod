@@ -30,6 +30,8 @@ public class MessageMod implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("MessageMod initialized!");
 
+        LOGGER.info("Connection to DB:{}", HibernateUtil.testConnection());
+
         messageService = new MessageService(new MessageRepository());
 
         PayloadTypeRegistry.playC2S().register(MessagePayload.TYPE, MessagePayload.STREAM_CODEC);

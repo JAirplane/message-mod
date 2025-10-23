@@ -2,8 +2,9 @@ package com.jefferson.db;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public interface JPARepository {
-    void saveMessage(UUID uuid, String text);
-    Optional<MessageEntity> findById(Long id);
+    CompletableFuture<Void> saveMessage(UUID uuid, String text);
+    CompletableFuture<Optional<MessageEntity>> findById(Long id);
 }
